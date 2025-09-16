@@ -1,10 +1,14 @@
-/* ===== General ===== */
+/* ===== Reset básico y reglas globales ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   line-height: 1.6;
   color: #fff;
   background-color: #111;
+  /* si la navbar es fixed, deja espacio arriba igual a su altura */
+  padding-top: 70px;
 }
 
 /* ===== Navbar ===== */
@@ -16,41 +20,65 @@ body {
   padding: 15px 40px;
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   z-index: 100;
 }
-.logo {
-  color: #f1c40f;
-  font-size: 1.5rem;
-}
+.logo { color: #f1c40f; font-size: 1.5rem; }
 .menu a {
   margin: 0 15px;
   text-decoration: none;
   color: white;
   font-weight: bold;
 }
-.menu a:hover {
-  color: #f1c40f;
-}
+.menu a:hover { color: #f1c40f; }
 
 /* ===== Hero ===== */
 .hero {
-  height: 100vh;
+  min-height: calc(100vh - 70px);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: url('') center/cover no-repeat; /* 🔹 Coloca aquí tu imagen de fondo */
+  padding: 40px 20px;
+  background-color: #0f0f0f;
+}
+.hero-container {
+  display: flex;
+  gap: 30px;
+  max-width: 1200px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .hero-text {
-  background: rgba(0,0,0,0.6);
-  padding: 20px;
+  flex: 1 1 420px;
+  background: rgba(0,0,0,0.45);
+  padding: 24px;
   border-radius: 10px;
+}
+.hero-image {
+  flex: 1 1 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+.hero-image img {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  object-fit: cover;
 }
 
 /* ===== Secciones ===== */
 .section {
-  padding: 100px 40px;
+  padding: 80px 40px;
   text-align: center;
 }
 .section-title {
@@ -59,41 +87,87 @@ body {
   color: #f1c40f;
 }
 
-/* ===== Cards ===== */
+/* ===== Cards / Grid de IAs ===== */
 .cards {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 24px;
   flex-wrap: wrap;
+  align-items: stretch;
 }
 .card {
   background: #222;
   border-radius: 10px;
-  padding: 20px;
+  padding: 18px;
   width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
+
+/* ===== Contenedor de la imagen dentro de la tarjeta =====
+   - altura fija para consistencia
+   - overflow:hidden para que no "salgan" las imágenes
+   - la imagen interna usa object-fit:contain para no recortar logos */
 .card-img {
   background: #444;
-  height: 150px;
+  height: 150px;           /* altura consistente para todas las tarjetas */
   border-radius: 8px;
   margin-bottom: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #aaa;
-  font-size: 0.9rem;
+  overflow: hidden;        /* evita desbordes */
+  padding: 6px;            /* espacio para que no queden pegadas */
+}
+
+/* Aseguramos que la imagen interna se adapte sin deformarse */
+.card-img img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+  object-fit: contain;     /* mantiene aspecto y evita recortes */
+}
+
+/* Si quieres que algunos logos ocupen más, añade clase .large-img en el HTML
+   y aplica: .card-img.large-img { height: 200px; } */
+
+/* ===== Texto y footer ===== */
+.card h3 {
+  margin: 6px 0 8px;
+  font-size: 1.05rem;
+  color: #f1c40f;
+}
+.card p {
+  margin: 0;
+  color: #ccc;
+  font-size: 0.95rem;
 }
 
 /* ===== Footer ===== */
 footer {
   background: #111;
-  padding: 20px;
+  padding: 24px;
   text-align: center;
   font-size: 0.9rem;
   color: #aaa;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .cards { gap: 16px; }
+  .card { width: calc(50% - 20px); }
+  .hero-container { padding: 10px; }
+}
+@media (max-width: 600px) {
+  .card { width: 100%; }
+  body { padding-top: 60px; }
+  .hero-container { flex-direction: column; }
 }
